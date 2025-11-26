@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery Jam Digital</title>
+    <!-- Memuat pustaka jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <center>
+        <h1 id="jam">00:00:00</h1>
+        <hr>
+        <button id="start">START/STOP</button>
+    </center>
+
+    <script>
+        $(document).ready(function() {
+            let interval = null;
+            let running = false;
+
+            function tampilJam() {
+                const waktu = new Date();
+                let jam = waktu.getHours();
+                let menit = waktu.getMinutes();
+                let detik = waktu.getSeconds();
+
+                // Tambahkan awalan 0 jika kurang dari 10
+                if (jam < 10) jam = "0" + jam;
+                if (menit < 10) menit = "0" + menit;
+                if (detik < 10) detik = "0" + detik;
+
+                $("#jam").text(jam + ":" + menit + ":" + detik);
+            }
+
+            // Tombol start/stop
+            $("#start").click(function() {
+                if (!running) {
+                    interval = setInterval(tampilJam, 1000);
+                    tampilJam(); // tampilkan langsung tanpa tunggu 1 detik
+                    running = true;
+                } else {
+                    clearInterval(interval);
+                    running = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
